@@ -26,7 +26,7 @@ This system allows for the management of animal movement records between farms. 
 
 ## Authentication System
 
-Both backend and frontend use JWT tokens for authentication. Any user without proper credentials cannot access data. This is showcased in the video.
+Both backend and frontend use JWT tokens for authentication. Any user without proper credentials cannot access data.
 The application implements role-based access.
 
 There can be three types of users: ADMIN, USER, VIEWER.
@@ -78,7 +78,7 @@ docker compose up
 
 ## Testing
 
-Testing details are integrated within individual components. While unit tests are not demonstrated in the video, end-to-end testing using the Cypress Framework is showcased at the conclusion of the presentation.
+Testing details are integrated within individual components.
 
 ## Bonus Implementations
 
