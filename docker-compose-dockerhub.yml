@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  database:
+    image: soham47/farmtrack-database:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: farmtrack-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 3214
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend:
+    image: soham47/farmtrack-backend:latest
+    container_name: spring_backend
+    restart: always
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/farmtrack-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 3214
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: 3214
+      JWT_VALIDITY: 86400000
+      JWT_SECRET: x]1&j~BW|47wvY#l03a]wt@__J#e7!NU
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  frontend:
+    image: soham47/farmtrack-frontend:latest
+    container_name: angular_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -1,0 +1,26 @@
+[
+  {
+    "movementId": 3,
+    "originFarm": {
+      "premiseId": "TESTING1",
+      "totalAnimal": 1000
+    },
+    "destinationFarm": {
+      "premiseId": "TESTING2",
+      "totalAnimal": 1000
+    },
+    "numItemsMoved": 1000
+  },
+  {
+    "movementId": 4,
+    "originFarm": {
+      "premiseId": "TESTING3",
+      "totalAnimal": 1000
+    },
+    "destinationFarm": {
+      "premiseId": "TESTING4",
+      "totalAnimal": 1000
+    },
+    "numItemsMoved": 1000
+  }
+]

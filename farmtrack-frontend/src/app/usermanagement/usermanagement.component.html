@@ -1,0 +1,84 @@
+<div
+  class="flex flex-col items-start justify-start gap-4 w-[70%] bg-[#f7f9fb] h-screen"
+>
+  <div class="flex flex-col items-center justify-center w-full">
+    <form
+      id="user-form"
+      name="userForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-4 w-1/3 border border-gray-300 p-8 rounded-md mt-3 bg-[#f7f9fb]"
+    >
+      <h2 class="text-4xl font-semibold text-[#042143] my-8">Add User</h2>
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="text-red-600 text-sm mb-4">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Username -->
+      <label class="text-lg font-medium" for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="selectedUser.username"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      />
+      <div *ngIf="!selectedUser.username" class="text-red-600 text-sm">
+        Username is required.
+      </div>
+
+      <!-- Password -->
+      <label for="password" class="text-lg font-medium">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="selectedUser.password"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      />
+      <div *ngIf="!selectedUser.password" class="text-red-600 text-sm">
+        Password is required.
+      </div>
+
+      <!-- Role -->
+      <label for="role" class="text-lg font-medium">Role:</label>
+      <select
+        id="role"
+        name="role"
+        [(ngModel)]="selectedUser.role"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      >
+        <option value="VIEWER">VIEWER</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="USER">USER</option>
+      </select>
+      <div *ngIf="!selectedUser.role" class="text-red-600 text-sm">
+        Role is required.
+      </div>
+
+      <!-- Buttons -->
+      <div class="w-full flex justify-between items-center gap-2">
+        <button
+          id="save-button"
+          name="saveButton"
+          type="submit"
+          class="bg-[#042143] text-[#f7f9fb] py-2 px-4 rounded-md hover:bg-[#193883] transition duration-300 cursor-pointer w-full"
+        >
+          Save
+        </button>
+        <button
+          id="cancel-button"
+          name="cancelButton"
+          (click)="onCancel()"
+          type="button"
+          class="bg-[#f7f9fb] text-[#042143] border border-[#042143] py-2 px-4 rounded-md hover:bg-[#c5eaff] transition duration-300 cursor-pointer w-full"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

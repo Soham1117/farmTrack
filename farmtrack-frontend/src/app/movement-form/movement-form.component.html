@@ -1,0 +1,112 @@
+<div
+  class="flex flex-col items-start justify-start gap-4 w-[70%] bg-[#f7f9fb] h-screen"
+>
+  <div class="flex flex-col items-center justify-center w-full">
+    <form
+      id="movement-form"
+      name="movement-form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-4 w-1/3 border border-gray-300 p-8 rounded-md mt-3 bg-[#f7f9fb]"
+    >
+      <div class="flex items-center flex-row justify-between">
+        <h2 class="text-4xl font-semibold text-[#042143] my-8">
+          {{ isEditMode ? "Edit Movement" : "Add Movement" }}
+        </h2>
+        <img
+          id="movement-logo"
+          name="movement-logo"
+          src="movement.png"
+          class="h-12 mr-2"
+          alt="Logo"
+        />
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="text-red-600 text-sm mb-4">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Origin Premise ID -->
+      <label class="text-lg font-medium" for="originPremiseId"
+        >Origin Premise ID:</label
+      >
+      <select
+        id="originPremiseId"
+        [(ngModel)]="movement.originFarm.premiseId"
+        name="originPremiseId"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      >
+        <option *ngFor="let farm of farms" [value]="farm.premiseId">
+          {{ farm.premiseId }}
+        </option>
+      </select>
+      <div *ngIf="!movement.originFarm.premiseId" class="text-red-600 text-sm">
+        Origin Premise ID is required.
+      </div>
+
+      <!-- Destination Premise ID -->
+      <label class="text-lg font-medium" for="destinationPremiseId"
+        >Destination Premise ID:</label
+      >
+      <select
+        id="destinationPremiseId"
+        [(ngModel)]="movement.destinationFarm.premiseId"
+        name="destinationPremiseId"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      >
+        <option *ngFor="let farm of farms" [value]="farm.premiseId">
+          {{ farm.premiseId }}
+        </option>
+      </select>
+      <div
+        *ngIf="!movement.destinationFarm.premiseId"
+        class="text-red-600 text-sm"
+      >
+        Destination Premise ID is required.
+      </div>
+
+      <!-- Number of Animals Moved -->
+      <label class="text-lg font-medium" for="numItemsMoved"
+        >Number of Animals Moved:</label
+      >
+      <input
+        type="number"
+        id="numItemsMoved"
+        [(ngModel)]="movement.numItemsMoved"
+        name="numItemsMoved"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+        min="1"
+      />
+      <div
+        *ngIf="!movement.numItemsMoved || movement.numItemsMoved <= 0"
+        class="text-red-600 text-sm"
+      >
+        Number of Animals Moved must be greater than 0.
+      </div>
+
+      <!-- Buttons -->
+      <div class="w-full flex justify-between items-center gap-2">
+        <button
+          id="save-movement-button"
+          name="save-movement"
+          type="submit"
+          class="bg-[#042143] text-[#f7f9fb] py-2 px-4 rounded-md hover:bg-[#193883] transition duration-300 cursor-pointer w-full"
+        >
+          Save
+        </button>
+        <button
+          id="cancel-movement-button"
+          name="cancel-movement"
+          (click)="onCancel()"
+          type="button"
+          class="bg-[#f7f9fb] text-[#042143] border border-[#042143] py-2 px-4 rounded-md hover:bg-[#c5eaff] transition duration-300 cursor-pointer w-full"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

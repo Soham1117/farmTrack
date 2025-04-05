@@ -1,0 +1,103 @@
+<div
+  class="flex flex-col items-start justify-start gap-4 w-[70%] bg-[#f7f9fb] h-screen"
+>
+  <div class="flex flex-col items-center justify-center w-full">
+    <form
+      id="farm-form"
+      name="farm-form"
+      [formGroup]="farmForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-4 w-1/3 border border-gray-300 p-8 rounded-md mt-3 bg-[#f7f9fb]"
+    >
+      <div class="flex items-center flex-row justify-between">
+        <h2 class="text-4xl font-semibold text-[#042143] my-8">
+          {{ isEditMode ? "Edit Farm" : "Add Farm" }}
+        </h2>
+        <img
+          id="farm-logo"
+          name="farm-logo"
+          src="farm.png"
+          class="h-12 mr-2"
+          alt="Logo"
+        />
+      </div>
+
+      <label class="text-lg font-medium" for="premiseId">Premise ID:</label>
+      <input
+        type="text"
+        id="premiseId"
+        formControlName="premiseId"
+        name="premiseId"
+        data-cy="premiseId-input"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      />
+      <div
+        *ngIf="
+          farmForm.get('premiseId')?.invalid &&
+          (farmForm.get('premiseId')?.touched ||
+            farmForm.get('premiseId')?.dirty ||
+            formSubmitted)
+        "
+        class="text-red-500 text-sm"
+      >
+        Premise ID is required.
+      </div>
+
+      <label for="total_animal" class="text-lg font-medium"
+        >Total Animals:</label
+      >
+      <input
+        type="number"
+        id="total_animal"
+        formControlName="totalAnimal"
+        name="total_animal"
+        class="text-[#042143] border border-[#042143] px-4 py-2 rounded-md focus:outline-none"
+        required
+      />
+      <div
+        *ngIf="
+          farmForm.get('totalAnimal')?.invalid &&
+          (farmForm.get('totalAnimal')?.touched ||
+            farmForm.get('totalAnimal')?.dirty ||
+            formSubmitted)
+        "
+        class="text-red-500 text-sm"
+      >
+        Total Animals is required.
+      </div>
+
+      <div
+        *ngIf="error"
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative"
+      >
+        <strong class="font-bold">Error!</strong>
+        <span class="block">{{ error }}</span>
+      </div>
+
+      <div class="w-full flex justify-between items-center gap-2">
+        <button
+          id="save-farm-button"
+          name="save-farm"
+          type="submit"
+          [disabled]="farmForm.invalid || loading"
+          class="bg-[#042143] text-[#f7f9fb] py-2 px-4 rounded-md hover:bg-[#193883] transition duration-300 cursor-pointer w-full"
+          [ngClass]="{
+            'opacity-50 cursor-not-allowed': farmForm.invalid || loading
+          }"
+        >
+          {{ loading ? "Saving..." : "Save" }}
+        </button>
+        <button
+          id="cancel-farm-button"
+          name="cancel-farm"
+          (click)="onCancel()"
+          type="button"
+          class="bg-[#f7f9fb] text-[#042143] border border-[#042143] py-2 px-4 rounded-md hover:bg-[#c5eaff] transition duration-300 cursor-pointer w-full"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

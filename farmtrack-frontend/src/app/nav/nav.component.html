@@ -1,0 +1,86 @@
+<nav
+  class="flex flex-row mt-3 bg-[#f7f9fb] text-[#042143] backdrop-blur-xl text-xl p-4 rounded-md shadow-sm w-[65%] gap-4 items-start justify-between border border-gray-300 max-h-[10vh] ml-10"
+>
+  <div class="flex items-center flex-row">
+    <img
+      id="main-logo"
+      name="main-logo"
+      src="logo-no-background-1.png"
+      class="h-8 mr-3"
+      alt="Logo"
+      routerLink="/"
+    />
+    <span
+      id="main-title"
+      name="main-title"
+      class="self-center text-2xl font-semibold whitespace-nowrap text-[#042143]"
+      >FarmTrack</span
+    >
+  </div>
+  <div class="hidden md:block">
+    <div class="ml-10 flex items-baseline space-x-4">
+      <ng-container *ngIf="authService.isLoggedIn()"
+        ><a
+          id="farms-nav-link"
+          name="farms-nav"
+          routerLink="/farms"
+          [class]="
+            isActive('/farms')
+              ? 'py-1 px-4 rounded-md bg-[#042143] text-white font-medium transition duration-300'
+              : 'py-1 px-4 rounded-md hover:bg-[#04214355] hover:text-white transition duration-300'
+          "
+          >Farms</a
+        >
+      </ng-container>
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <a
+          id="movements-nav-link"
+          name="movements-nav"
+          routerLink="/movements"
+          [class]="
+            isActive('/movements')
+              ? 'py-1 px-4 rounded-md bg-[#042143] text-white font-medium transition duration-300'
+              : 'py-1 px-4 rounded-md hover:bg-[#04214355] hover:text-white transition duration-300'
+          "
+          >Movements</a
+        >
+      </ng-container>
+      <ng-container *ngIf="authService.getCurrentUserRole() === 'ROLE_ADMIN'">
+        <a
+          id="users-nav-link"
+          name="users-nav"
+          routerLink="/users"
+          [class]="
+            isActive('/users')
+              ? 'py-1 px-4 rounded-md bg-[#042143] text-white font-medium transition duration-300'
+              : 'py-1 px-4 rounded-md hover:bg-[#04214355] hover:text-white transition duration-300'
+          "
+          >Users</a
+        >
+      </ng-container>
+      <ng-container *ngIf="!authService.isLoggedIn(); else loggedIn">
+        <a
+          id="login-nav-link"
+          name="login-nav"
+          routerLink="/login"
+          [class]="
+            isActive('/login')
+              ? 'py-1 px-4 rounded-md bg-[#042143] text-white font-medium transition duration-300'
+              : 'py-1 px-4 rounded-md hover:bg-[#04214355] hover:text-white transition duration-300'
+          "
+          >Login</a
+        >
+      </ng-container>
+      <ng-template #loggedIn>
+        <a
+          id="logout-nav-link"
+          name="logout-nav"
+          href="#"
+          (click)="logout($event)"
+          class="py-1 px-4 rounded-md hover:bg-[#04214355] hover:text-white transition duration-300"
+          >Logout</a
+        >
+      </ng-template>
+    </div>
+  </div>
+</nav>

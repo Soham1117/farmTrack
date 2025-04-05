@@ -1,0 +1,80 @@
+<div
+  class="fixed top-0 mt-3 right-0 mr-8 z-50 p-6 w-[30%] max-h-screen bg-gray-100 shadow-sm rounded-md border border-gray-300"
+>
+  <h2 class="text-2xl font-bold mb-6">User Interaction Dashboard</h2>
+
+  <!-- Compact Interactions Table -->
+  <div
+    class="bg-white rounded-lg border border-gray-300 w-full h-[86vh] overflow-y-scroll"
+  >
+    <table class="w-full">
+      <thead class="sticky top-0 bg-white">
+        <tr class="text-left">
+          <th
+            class="py-3 px-4 border-b-2 border-gray-200 bg-[#eef3f4] text-sm font-semibold text-gray-600 uppercase tracking-wider"
+          >
+            Time
+          </th>
+          <th
+            class="py-3 px-4 border-b-2 border-gray-200 bg-[#eef3f4] text-sm font-semibold text-gray-600 uppercase tracking-wider"
+          >
+            Page
+          </th>
+          <th
+            class="py-3 px-4 border-b-2 border-gray-200 bg-[#eef3f4] text-sm font-semibold text-gray-600 uppercase tracking-wider"
+          >
+            Event
+          </th>
+          <th
+            class="py-3 px-4 border-b-2 border-gray-200 bg-[#eef3f4] text-sm font-semibold text-gray-600 uppercase tracking-wider"
+          >
+            Target
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let interaction of interactions"
+          class="hover:bg-gray-50 border-b border-gray-200"
+        >
+          <td class="py-3 px-4 text-xs text-gray-700 whitespace-nowrap">
+            {{ interaction.timestamp | date : "shortTime" }}
+          </td>
+          <td class="py-3 px-4 text-xs text-gray-700 truncate max-w-[100px]">
+            {{ interaction.pageUrl }}
+          </td>
+          <td class="py-3 px-4 text-xs text-gray-700">
+            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+              {{ interaction.eventType }}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-xs text-gray-700">
+            <div class="flex flex-col space-y-1">
+              <span *ngIf="interaction.elementType" class="flex items-center">
+                <span class="font-medium mr-1">Type:</span>
+                <span class="truncate">{{ interaction.elementType }}</span>
+              </span>
+              <span *ngIf="interaction.elementId" class="flex items-center">
+                <span class="font-medium mr-1">ID:</span>
+                <span class="truncate">{{ interaction.elementId }}</span>
+              </span>
+              <span *ngIf="interaction.elementLabel" class="flex items-center">
+                <span class="font-medium mr-1">Label:</span>
+                <span class="truncate">{{ interaction.elementLabel }}</span>
+              </span>
+              <span
+                *ngIf="interaction.additionalContext?.buttonAction"
+                class="flex items-center"
+              >
+                <span class="font-medium mr-1">Action:</span>
+                <span *ngIf="interaction.additionalContext">{{
+                  interaction.additionalContext.buttonAction
+                }}</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

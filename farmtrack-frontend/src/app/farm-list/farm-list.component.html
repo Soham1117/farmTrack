@@ -1,0 +1,126 @@
+<div
+  class="flex flex-col gap-4 items-start pl-10 justify-center w-full bg-[#f7f9fb] max-h-[88vh]"
+>
+  <div
+    class="flex flex-row w-2/3 justify-between items-start gap-4 shadow-sm rounded-md p-2 border border-gray-300"
+  >
+    <div class="flex flex-row gap-6 p-4 items-center justify-center rounded-md">
+      <span class="text-4xl font-semibold text-[#042143]">Total Farms</span>
+      <span class="text-4xl font-semibold text-[#042143]">
+        {{ totalFarms }}
+      </span>
+    </div>
+    <div class="flex flex-row gap-6 p-4 items-center justify-center rounded-md">
+      <span class="text-4xl font-semibold text-[#042143]">Total Animals</span>
+      <span class="text-4xl font-semibold text-[#042143]">
+        {{ totalAnimals }}
+      </span>
+    </div>
+  </div>
+  <div
+    class="flex gap-4 w-2/3 justify-between items-center shadow-sm rounded-md p-2 border border-gray-300"
+  >
+    <div>
+      <input
+        type="text"
+        id="farm-search-input"
+        name="farm-search"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilter()"
+        placeholder="Search by Premise ID"
+        class="text-[#042143] w-2/3 px-4 py-2 rounded-md focus:outline-none"
+      />
+    </div>
+    <div>
+      <button
+        id="add-farm-button"
+        name="add-farm"
+        *ngIf="
+          authService.getCurrentUserRole() === 'ROLE_ADMIN' ||
+          authService.getCurrentUserRole() === 'ROLE_USER'
+        "
+        (click)="createFarm()"
+        class="bg-[#042143] text-[#f7f9fb] py-2 px-4 rounded-md hover:bg-[#193883] transition duration-300 cursor-pointer"
+      >
+        Add Farm
+      </button>
+    </div>
+  </div>
+  <div
+    class="overflow-x-auto overflow-y-scroll bg-[#f7f9fb] border border-gray-300 rounded-md w-2/3 shadow-sm"
+  >
+    <table
+      class="w-full flex flex-col items-center justify-center"
+      id="farm-table"
+    >
+      <thead class="w-full">
+        <tr class="w-full flex justify-center items-center flex-row">
+          <th
+            class="py-3 border-b-2 border-gray-200 bg-[#eef3f4] text-md font-semibold text-gray-600 uppercase tracking-wider w-full"
+          >
+            Premise ID
+          </th>
+          <th
+            class="py-3 border-b-2 border-gray-200 bg-[#eef3f4] text-md font-semibold text-gray-600 uppercase tracking-wider w-full"
+          >
+            Total Animals
+          </th>
+          <th
+            *ngIf="
+              authService.getCurrentUserRole() === 'ROLE_ADMIN' ||
+              authService.getCurrentUserRole() === 'ROLE_USER'
+            "
+            class="py-3 border-b-2 border-gray-200 bg-[#eef3f4] text-md font-semibold text-gray-600 uppercase tracking-wider w-full"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="w-full">
+        <tr
+          *ngFor="let farm of filteredFarms"
+          class="hover:bg-gray-50 flex justify-center items-center flex-row w-full"
+        >
+          <td
+            class="py-2 border-b border-gray-200 text-sm w-full flex justify-center"
+          >
+            <p class="text-gray-900 whitespace-no-wrap">{{ farm.premiseId }}</p>
+          </td>
+          <td
+            class="py-2 border-b border-gray-200 text-sm w-full flex justify-center"
+          >
+            <p class="text-gray-900 whitespace-no-wrap">
+              {{ farm.totalAnimal }}
+            </p>
+          </td>
+          <td
+            *ngIf="
+              authService.getCurrentUserRole() === 'ROLE_ADMIN' ||
+              authService.getCurrentUserRole() === 'ROLE_USER'
+            "
+            class="py-2 border-b border-gray-200 text-sm w-full flex justify-center"
+          >
+            <div class="flex flex-row gap-8">
+              <button
+                id="edit-farm-button-{{ farm.premiseId }}"
+                name="edit-farm"
+                (click)="editFarm(farm.premiseId)"
+                class="text-[#193883] hover:text-blue-900 mr-3 cursor-pointer"
+              >
+                Edit
+              </button>
+              <button
+                id="delete-farm-button-{{ farm.premiseId }}"
+                name="delete-farm"
+                (click)="deleteFarm(farm.premiseId)"
+                class="text-red-600 hover:text-red-900 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
